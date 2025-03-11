@@ -1,16 +1,12 @@
-import { Elysia, t } from "elysia";
-import jwt from "@elysiajs/jwt";
+import { Elysia } from "elysia";
 import { auth } from "./v1/auth/controller";
+import { user } from "./v1/user/controller";
 import { swagger } from "@elysiajs/swagger";
 
 const app = new Elysia({ prefix: "/v1" })
   .use(swagger())
-  .use(jwt({
-    name: "token",
-    secret: process.env.JWT_SECRET as string,
-    exp: process.env.JWT_EXP as string,
-  }))
   .use(auth)
+  .use(user)
   .listen(3000);
 
 console.log(
